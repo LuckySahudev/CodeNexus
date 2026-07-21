@@ -1,0 +1,33 @@
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+
+
+const HeaderCenter = () => {
+  const links = [
+    { name: "Home", path: "/" },
+    { name: "Practice", path: "/practice" },
+    { name: "Learn DSA", path: "/learndsa" },
+    { name: "Progress", path: "/progress" },
+  ];
+
+  return (
+    <nav className="flex gap-8">
+      {links.map((link) => (
+        <NavLink
+          key={link.path}
+          to={link.path}
+          className={({ isActive }) =>
+            `capitalize transition-colors ${
+              isActive ? "text-amber-500" : "text-white"
+            }
+            active:scale-[98%]`
+          }
+        >
+          {link.name}
+        </NavLink>
+      ))}
+    </nav>
+  );
+};
+
+export default HeaderCenter;
