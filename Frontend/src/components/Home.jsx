@@ -1,14 +1,16 @@
 import React from "react";
 import HeroSection from "./HeroSection";
-import ProgressCard from "./ProgressCard";
-import RoadmapGrid from "./RoadmapGrid";
+// import ProgressCard from "./ProgressCard";
+// import RoadmapGrid from "./RoadmapGrid";
 
-const Home = () => {
+const Home = (props) => {
   return (
-    <div className=" mx-auto px-8 py-10 h-full overflow-auto">
-      <HeroSection />
+    <div className=" mx-auto px-8 py-10 h-full ">
+      { ! props.isLogin && (<HeroSection />) }
+      
+      {/* 
       <ProgressCard />
-      <RoadmapGrid />
+      <RoadmapGrid /> */}
     </div>
   );
 };

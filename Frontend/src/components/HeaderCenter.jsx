@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 
-const HeaderCenter = () => {
+const HeaderCenter = ({requireLogin}) => {
   const links = [
     { name: "Home", path: "/" },
     { name: "Practice", path: "/practice" },
@@ -16,6 +16,7 @@ const HeaderCenter = () => {
         <NavLink
           key={link.path}
           to={link.path}
+          onClick={link.name !== "Home" ? (e) => requireLogin(e) : undefined}
           className={({ isActive }) =>
             `capitalize transition-colors ${
               isActive ? "text-amber-500" : "text-white"

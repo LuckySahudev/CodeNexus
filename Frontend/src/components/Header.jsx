@@ -4,15 +4,15 @@ import HeaderLeft from './HeaderLeft';
 import HeaderCenter from './HeaderCenter';
 import HeaderRight from './HeaderRight';
 
-const Header = () => {
+const Header = (props) => {
   return (
     <header className="w-full px-5 py-3 flex items-center justify-between bg-mist-900 text-white">
 
-      <HeaderLeft/>
+      <HeaderLeft />
 
-      <HeaderCenter/>
+      <HeaderCenter {...props} />
       
-      <HeaderRight/>
+      <HeaderRight {...props}/>
 
     </header>
   )

@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { Moon, BellRing, Sun} from "lucide-react";
 import LoginPopUp from "./LoginPopUp";
 
-const HeaderRight = () => {
-  const [theme, setTheme] = useState("dark");
-  const [showLogin, setShowLogin] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
-  const [userName,setUserName] = useState('');
+const HeaderRight = ({theme,setTheme,showLogin,setShowLogin,isLogin,setIsLogin,userName,setUserName}) => {
 
   return (
     <>
