@@ -7,9 +7,10 @@ const HeaderRight = ({theme,setTheme,showLogin,setShowLogin,isLogin,setIsLogin,u
   return (
     <>
       <div className="flex items-center gap-2">
-        <div className="hover:bg-mist-800 p-3 rounded-full cursor-pointer">
+
+        {isLogin && (<div className="hover:bg-mist-800 p-3 rounded-full cursor-pointer">
           <BellRing size={18} />
-        </div>
+        </div>)}
 
         <button
           className="hover:bg-mist-800 p-3 rounded-full active:scale-[97%] cursor-pointer"
@@ -26,6 +27,7 @@ const HeaderRight = ({theme,setTheme,showLogin,setShowLogin,isLogin,setIsLogin,u
         >
           {isLogin ? userName : "Login"}
         </button>
+
       </div>
 
       {/* Login Modal */}

@@ -6,11 +6,11 @@ import HeaderRight from './HeaderRight';
 
 const Header = (props) => {
   return (
-    <header className="w-full px-5 py-3 flex items-center justify-between bg-mist-900 text-white">
+    <header className="w-full px-5 py-3 flex items-center justify-between bg-mist-950 text-white">
 
       <HeaderLeft />
 
-      <HeaderCenter {...props} />
+      { ! props.isLogin && (< HeaderCenter {...props} />)} 
       
       <HeaderRight {...props}/>
 

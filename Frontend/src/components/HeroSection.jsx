@@ -1,7 +1,15 @@
 import { Link, Outlet, NavLink } from "react-router-dom";
 import React from "react";
+import Practice from "../../../../CodeNexusTest/Frontend/src/components/Practice";
+import PracticeInfo from "./PracticeInfo";
+import LearnDsaInfo from "./LearndsaInfo";
+import { useState } from "react";
 
 const HeroSection = ({ setShowLogin, isLogin, requireLogin }) => {
+
+
+  const [select , setSelect] = useState(<PracticeInfo/>)
+
   return (
     <section className=" flex flex-col items-center justify-center text-center my-10">
       <h1 className="text-5xl font-bold text-white leading-tight flex gap-3">
@@ -15,34 +23,36 @@ const HeroSection = ({ setShowLogin, isLogin, requireLogin }) => {
       </p>
 
       <div className="mt-10 flex gap-5">
-        <NavLink
-          to="/practiceinfo"
-          className={({ isActive }) =>
-            `px-7 py-3 rounded-lg border transition font-semibold ${
-              isActive
-                ? "bg-amber-500 border-amber-500 text-black"
-                : "border-gray-600 text-white hover:border-amber-500"
-            }`
+
+        <button
+          className={ `px-7 py-3 rounded-lg border transition font-semibold ${
+                select == <PracticeInfo/> ? "bg-amber-500 border-amber-500 text-black"
+                : "border-gray-600 text-white "
+            }   hover:border-amber-500 `
           }
+          onClick={()=>{
+            setSelect(<PracticeInfo/>)
+          }}
+          
         >
           Practice Mode
-        </NavLink>
+        </button>
 
-        <NavLink
-          to="/learndsainfo"
-          className={({ isActive }) =>
-            `px-7 py-3 rounded-lg border transition font-semibold ${
-              isActive
-                ? "bg-amber-500 border-amber-500 text-black"
-                : "border-gray-600 text-white hover:border-amber-500"
-            }`
+        <button
+          className={ `px-7 py-3 rounded-lg border transition font-semibold ${
+                select == <PracticeInfo/> ? "bg-amber-500 border-amber-500 text-black"
+                : "border-gray-600 text-white"
+            }    hover:border-amber-500 `
           }
+          onClick={()=>{
+            setSelect(<LearnDsaInfo/>)
+          }}
         >
           Learn Mode
-        </NavLink>
-      </div>
+        </button>
 
-      <Outlet />
+      </div>
+          {select}
     </section>
   );
 };

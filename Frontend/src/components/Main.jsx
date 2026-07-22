@@ -14,9 +14,6 @@ const Main = (props) => {
     <main className="h-[90%]  bg-mist-900  text-white overflow-y-scroll scrollbar-hide">
       <Routes>
         <Route path="/" element={<Home {...props} />}>
-          { !props.isLogin && (
-            <Route index element={<Navigate to="/practiceinfo" replace />} />
-          )}
           <Route path="practiceinfo" element={<PracticeInfo />}></Route>
           <Route path="learndsainfo" element={<LearnDsaInfo />}></Route>
         </Route>

@@ -19,9 +19,9 @@ const HeaderCenter = ({requireLogin}) => {
           onClick={link.name !== "Home" ? (e) => requireLogin(e) : undefined}
           className={({ isActive }) =>
             `capitalize transition-colors ${
-              isActive ? "text-amber-500" : "text-white"
+              isActive ? "text-amber-500" : "text-white "
             }
-            active:scale-[98%]`
+            active:scale-[98%] hover:text-amber-400`
           }
         >
           {link.name}
