@@ -8,6 +8,7 @@ const App = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [userName, setUserName] = useState("");
+  const [isHome,setIsHome] = useState(false);
 
   const requireLogin = (e) => {
     if (!isLogin) {
@@ -29,6 +30,8 @@ const App = () => {
         userName={userName}
         setUserName={setUserName}
         requireLogin={requireLogin}
+        isHome={isHome}
+        setIsHome={setIsHome}
       />
       <Main
         theme={theme}
@@ -40,6 +43,8 @@ const App = () => {
         userName={userName}
         setUserName={setUserName}
         requireLogin={requireLogin}
+        isHome={isHome}
+        setIsHome={setIsHome}
       />
     </div>
   );

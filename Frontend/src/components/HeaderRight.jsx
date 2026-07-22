@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Moon, BellRing, Sun} from "lucide-react";
 import LoginPopUp from "./LoginPopUp";
 
-const HeaderRight = ({theme,setTheme,showLogin,setShowLogin,isLogin,setIsLogin,userName,setUserName}) => {
+const HeaderRight = ({setIsHome, isHome, theme,setTheme,showLogin,setShowLogin,isLogin,setIsLogin,userName,setUserName}) => {
 
   return (
     <>
@@ -22,7 +22,9 @@ const HeaderRight = ({theme,setTheme,showLogin,setShowLogin,isLogin,setIsLogin,u
         </button>
 
         <button
-          onClick={() => setShowLogin(true)}
+          onClick={
+            () => setShowLogin(true)
+          }
           className="text-amber-500 active:scale-[98%] cursor-pointer ml-5 px-4 py-1 border border-amber-500 font-bold rounded-md text-md hover:border-amber-400 hover:text-amber-400"
         >
           {isLogin ? userName : "Login"}

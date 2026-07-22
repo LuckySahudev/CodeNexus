@@ -10,7 +10,7 @@ const Header = (props) => {
 
       <HeaderLeft />
 
-      { ! props.isLogin && (< HeaderCenter {...props} />)} 
+      { props.isHome && (< HeaderCenter {...props} />)} 
       
       <HeaderRight {...props}/>
 

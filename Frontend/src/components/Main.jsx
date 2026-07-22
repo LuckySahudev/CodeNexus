@@ -1,25 +1,26 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Home";
-import Practice from "../../../../CodeNexusTest/Frontend/src/components/Practice";
-import PracticeInfo from "./PracticeInfo";
-import LearnDsaInfo from "./LearndsaInfo";
+import Practice from './Practice'
+import LearnDsa from './LearnDsa'
+import DashBoard from "./DashBoard";
+import Progress from "./Progress";
+import Community from "./Community";
+import Dev from "./Dev";
 
-// import Practice from './Practice'
-// import LearnDSA from './LearnDSA'
-// import Progress from './Progress'
 
 const Main = (props) => {
   return (
-    <main className="h-[90%]  bg-mist-900  text-white overflow-y-scroll scrollbar-hide">
+    <main className="h-[90%]  bg-mist-900  text-white ">
       <Routes>
-        <Route path="/" element={<Home {...props} />}>
-          <Route path="practiceinfo" element={<PracticeInfo />}></Route>
-          <Route path="learndsainfo" element={<LearnDsaInfo />}></Route>
+        <Route path="/" element={<Home {...props} /> }></Route>
+        <Route path="/dev" element={<Dev {...props} />}>
+          <Route path='dashboard' element={<DashBoard/>} ></Route>
+          <Route path='practice' element={<Practice/>} ></Route>
+          <Route path='learndsa' element={<LearnDsa/>} ></Route>
+          <Route path='progress' element={<Progress/>} ></Route>
+          <Route path="community" element={<Community/>}></Route>
         </Route>
-        {/* <Route path='/practice' element={<Practice/>} ></Route>
-        <Route path='/learndsa' element={<LearnDSA/>} ></Route>
-        <Route path='/progress' element={<Progress/>} ></Route> */}
       </Routes>
     </main>
   );
