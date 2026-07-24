@@ -1,4 +1,45 @@
-import { Search, Flame, ExternalLink } from "lucide-react";
+import { Search, Flame, ExternalLink, NotebookPen } from "lucide-react";
+import { useState } from "react";
+
+const dataStructures = [
+  "1D Array",
+  "2D Array",
+  "String",
+  "Linked List",
+  "Stack",
+  "Queue",
+  "HashSet",
+  "HashMap",
+  "Tree",
+  "Heap",
+  "Graph",
+];
+
+const topics = [
+  "Linear Search",
+  "Binary Search",
+  "Two Pointer",
+  "Sliding Window",
+  "Prefix Sum",
+  "Bubble Sort",
+  "Selection Sort",
+  "Insertion Sort",
+  "Cycle Sort",
+  "Quick Sort",
+  "Merge Sort",
+  "Slow Fast",
+  "Dummy Node",
+  "Monotonic Stack",
+  "Binary Tree",
+  "Binary Search Tree",
+  "DFS",
+  "Kth Element Problems",
+  "Bit Manipulation",
+  "Dynamic Programming 1 (1D DP)",
+  "Dynamic Programming 2 (2D DP)",
+  "Dynamic Programming 3 (Subsequence)",
+  "Dynamic Programming 4 (Knapsack)",
+];
 
 const questions = [
   {
@@ -39,193 +80,207 @@ const questions = [
 ];
 
 export default function Practice() {
+  const [editWin, setEditWin] = useState(true);
+
   return (
-    <div className="min-h-screen bg-zinc-950 text-white p-6">
+    <>
+      {editWin ? (
+        <div className="rounded-xl border border-mist-700 bg-mist-950 p-6">
+          <h2 className="text-lg font-semibold text-white">
+            Practice Preferences
+          </h2>
 
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold">
-          Practice Questions
-        </h1>
+          <p className="mt-1 text-sm text-gray-400">
+            Choose the topics you've already learned. CodeNexus will generate
+            practice questions only from these topics.
+          </p>
 
-        <p className="text-zinc-400 mt-2">
-          Solve curated DSA questions and track your progress.
-        </p>
-      </div>
+          {/* Difficulty */}
+          <div className="mt-8">
+            <h3 className="mb-3 text-sm font-medium text-gray-300">
+              Difficulty
+            </h3>
 
-      {/* Search & Filters */}
-      <div className="flex flex-col lg:flex-row gap-4 mb-8">
-
-        <div className="flex-1 relative">
-
-          <Search
-            className="absolute left-4 top-3.5 text-zinc-500"
-            size={18}
-          />
-
-          <input
-            placeholder="Search questions..."
-            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg py-3 pl-11 pr-4 outline-none focus:border-blue-500"
-          />
-
-        </div>
-
-        <select className="bg-zinc-900 border border-zinc-800 rounded-lg px-4">
-          <option>All Difficulty</option>
-          <option>Easy</option>
-          <option>Medium</option>
-          <option>Hard</option>
-        </select>
-
-        <select className="bg-zinc-900 border border-zinc-800 rounded-lg px-4">
-          <option>All Topics</option>
-          <option>Array</option>
-          <option>String</option>
-          <option>HashMap</option>
-          <option>Sliding Window</option>
-        </select>
-
-      </div>
-
-      {/* Daily Challenge */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-8">
-
-        <div className="flex justify-between items-center">
-
-          <div>
-
-            <div className="flex items-center gap-2 text-orange-400">
-              <Flame size={18} />
-              <span>Today's Challenge</span>
+            <div className="flex flex-wrap gap-6">
+              {["Easy", "Medium", "Hard"].map((item) => (
+                <label
+                  key={item}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <input type="checkbox" className=" cursor-pointer h-4 w-4 accent-amber-500" />
+                  <span>{item}</span>
+                </label>
+              ))}
             </div>
-
-            <h2 className="text-2xl font-semibold mt-3">
-              Best Time to Buy and Sell Stock
-            </h2>
-
-            <p className="text-zinc-400 mt-2">
-              Difficulty: Easy • Estimated Time: 15 min
-            </p>
-
           </div>
 
-          <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-medium">
-            Solve Now
-          </button>
+          {/* Data Structures */}
+          <div className="mt-8">
+            <h3 className="mb-3 text-sm font-medium text-gray-300">
+              Data Structures
+            </h3>
 
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              {dataStructures.map((item) => (
+                <label
+                  key={item}
+                  className="flex items-center gap-2 rounded-lg border border-mist-700 bg-mist-800 px-3 py-2 hover:border-amber-500 cursor-pointer"
+                >
+                  <input type="checkbox" className="accent-amber-500" />
+                  <span className="text-sm">{item}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Algorithm Topics */}
+          <div className="mt-8">
+            <h3 className="mb-3 text-sm font-medium text-gray-300">
+              Algorithm Topics
+            </h3>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              {topics.map((item) => (
+                <label
+                  key={item}
+                  className="flex items-center gap-2 rounded-lg border border-mist-700 bg-mist-800 px-3 py-2 hover:border-amber-500 cursor-pointer"
+                >
+                  <input type="checkbox" className="accent-amber-500" />
+                  <span className="text-sm">{item}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-8 flex justify-end gap-3">
+            <button
+              className="rounded-lg border border-mist-700 px-4  py-2 text-sm font-medium text-gray-300 hover:bg-mist-800"
+              onClick={() => {
+                setEditWin(false);
+              }}
+            >
+              Cancel
+            </button>
+
+            <button
+              className="rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-400 transition-all duration-200 hover:border-amber-400 hover:bg-amber-500 hover:text-black"
+              onClick={() => {
+                setEditWin(false);
+              }}
+            >
+              Save Preferences
+            </button>
+          </div>
         </div>
+      ) : (
+        <div className=" bg-zinc-950 rounded-2xl border border-gray-600 text-white p-6 ">
+          {/* Search & Filters */}
 
-      </div>
+          <div className="my-5 flex items-center justify-between rounded-xl border border-mist-700 bg-mist-900 px-6 py-4">
+            <div className="flex flex-wrap items-center gap-8">
+              <div>
+                <p className="text-xs uppercase tracking-wider text-gray-500">
+                  Difficulty
+                </p>
+                <p className="mt-1 font-medium text-amber-400">Easy</p>
+              </div>
 
-      {/* Question Table */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
+              <div className="h-10 w-px bg-mist-700"></div>
 
-        <table className="w-full">
+              <div>
+                <p className="text-xs uppercase tracking-wider text-gray-500">
+                  Last Added
+                </p>
+                <p className="mt-1 font-medium text-white">Array</p>
+              </div>
+            </div>
 
-          <thead className="bg-zinc-800">
+            <button
+              className="rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-400 transition-all duration-200 hover:border-amber-400 hover:bg-amber-500 hover:text-black"
+              onClick={() => {
+                setEditWin(true);
+              }}
+            >
+              Edit
+            </button>
+          </div>
 
-            <tr>
-
-              <th className="text-left p-4">#</th>
-
-              <th className="text-left p-4">
-                Question
-              </th>
-
-              <th className="text-left p-4">
-                Difficulty
-              </th>
-
-              <th className="text-left p-4">
-                Topic
-              </th>
-
-              <th className="text-left p-4">
-                Status
-              </th>
-
-              <th className="text-center p-4">
-                Action
-              </th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {questions.map((q) => (
-
-              <tr
-                key={q.id}
-                className="border-t border-zinc-800 hover:bg-zinc-800/50 transition"
+          {/* Question List */}
+          <div className="space-y-3  bg-zinc-950 rounded-2xl border border-gray-600 text-white p-6">
+            {questions.map((item, index) => (
+              <div
+                key={item.id}
+                className="flex items-center justify-between rounded-xl border border-mist-700 bg-mist-900 px-5 py-2 transition hover:border-mist-500 "
               >
+                {/* Left */}
+                <div className="flex items-center gap-4">
+                  <input
+                    type="checkbox"
+                    className="h-4 w-4 accent-amber-500 cursor-pointer"
+                  />
 
-                <td className="p-4">
-                  {q.id}
-                </td>
-
-                <td className="p-4 font-medium">
-                  {q.title}
-                </td>
-
-                <td className="p-4">
-
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm
-                    ${
-                      q.difficulty === "Easy"
-                        ? "bg-green-500/20 text-green-400"
-                        : q.difficulty === "Medium"
-                        ? "bg-yellow-500/20 text-yellow-400"
-                        : "bg-red-500/20 text-red-400"
-                    }`}
-                  >
-                    {q.difficulty}
+                  <span className="w-8 text-sm font-semibold text-gray-500">
+                    {index + 1}.
                   </span>
 
-                </td>
+                  <div>
+                    <h2 className="font-medium text-xl text-white">
+                      {item.title}
+                    </h2>
 
-                <td className="p-4">
-                  {q.topic}
-                </td>
+                    <div className=" flex items-center gap-3 text-sm text-gray-400">
+                      <span>#{item.leetcodeId}</span>
 
-                <td className="p-4">
+                      <span>•</span>
 
-                  {q.solved ? (
-                    <span className="text-green-400">
-                      ✅ Solved
-                    </span>
-                  ) : (
-                    <span className="text-zinc-400">
-                      ⭕ Unsolved
-                    </span>
-                  )}
+                      <span>{item.topic}</span>
 
-                </td>
+                      <span>•</span>
 
-                <td className="p-4 text-center">
+                      {item.solved ? (
+                        <span className="text-green-400">✓ Solved</span>
+                      ) : (
+                        <span className="text-gray-500">Unsolved</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
 
-                  <button className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg">
+                {/* Right */}
+                <div className="flex items-center gap-4">
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                      item.difficulty === "Easy"
+                        ? "bg-green-500/20 text-green-400"
+                        : item.difficulty === "Medium"
+                          ? "bg-yellow-500/20 text-yellow-400"
+                          : "bg-red-500/20 text-red-400"
+                    }`}
+                  >
+                    {item.difficulty}
+                  </span>
 
+                  
+                  <a
+                    href={`https://leetcode.com/problems/${item.slug}/`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-lg text-sm bg-amber-500 px-4 py-2 font-medium text-black transition hover:bg-amber-400"
+                  >
                     Solve
+                  </a>
 
-                    <ExternalLink size={16} />
-
+                  <button className="flex items-center gap-2 rounded-lg border border-mist-700 bg-mist-800 px-4 py-2 text-base text-white transition hover:bg-mist-700">
+                    Add Notes
+                    <NotebookPen size={16} />
                   </button>
 
-                </td>
-
-              </tr>
-
+                </div>
+              </div>
             ))}
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

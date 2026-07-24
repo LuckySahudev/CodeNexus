@@ -6,7 +6,7 @@ import {
   BarChart3,
   Bookmark,
   CalendarCheck,
-  Trophy,
+  MessageCircleCode,
   FileText,
   Crown,
   UserCircle2,
@@ -33,11 +33,6 @@ const navs = [
     icon: <BookOpen size={18} />,
   },
   {
-    name: "Roadmap",
-    path: "/dev/roadmap",
-    icon: <Map size={18} />,
-  },
-  {
     name: "Progress",
     path: "/dev/progress",
     icon: <BarChart3 size={18} />,
@@ -48,20 +43,15 @@ const navs = [
     icon: <Bookmark size={18} />,
   },
   {
-    name: "Daily Challenge",
-    path: "/dev/daily",
-    icon: <CalendarCheck size={18} />,
-  },
-  {
-    name: "Contests",
-    path: "/dev/community",
-    icon: <Trophy size={18} />,
-  },
-  {
     name: "Notes",
     path: "/dev/notes",
     icon: <FileText size={18} />,
   },
+  {
+    name: "Community",
+    path: "/dev/community",
+    icon: <MessageCircleCode size={18} />,
+  }
 ];
 
 export default function DevNav() {

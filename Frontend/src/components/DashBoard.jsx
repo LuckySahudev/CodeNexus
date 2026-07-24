@@ -8,30 +8,18 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-const roadmap = [
-  "1D Array",
-  "2D Array",
-  "String",
-  "Linked List",
-  "Stack",
-  "Queue",
-  "HashMap",
-  "Tree",
-  "Heap",
-  "Graph",
-];
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   return (
-    <div className="min-h-screen bg-zinc-950 text-white p-6">
+    <div className="min-h-screen bg-mist-950 rounded-2xl border border-gray-600 text-white p-6">
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold">
-          Welcome Back 👋
+        <h1 className="text-3xl font-bold">
+          Welcome Back {props.userName} 👋
         </h1>
 
-        <p className="text-gray-400 mt-2">
+        <p className="text-gray-400  text-base">
           Continue your DSA journey and crack coding interviews.
         </p>
       </div>
@@ -42,38 +30,35 @@ export default function Dashboard() {
         <Card
           icon={<BookOpen />}
           title="Solved"
-          value="72"
-          color="text-green-400"
+          value="0"
         />
 
         <Card
           icon={<Target />}
           title="Remaining"
-          value="173"
-          color="text-red-400"
+          value="250"
         />
 
         <Card
           icon={<Flame />}
           title="Daily Streak"
           value="12 Days"
-          color="text-orange-400"
         />
 
         <Card
           icon={<Trophy />}
           title="Completion"
           value="29%"
-          color="text-yellow-400"
         />
 
       </div>
 
       {/* Middle Section */}
-      <div className="grid lg:grid-cols-3 gap-6 mt-8">
+
+      <div className="grid lg:grid-cols-3 gap-6 my-10">
 
         {/* Continue Learning */}
-        <div className="bg-zinc-900 rounded-xl p-5">
+        <div className="bg-mist-900 rounded-xl p-5 border border-mist-700">
 
           <div className="flex justify-between">
             <h2 className="text-xl font-semibold">
@@ -93,7 +78,7 @@ export default function Dashboard() {
               Last watched: Variable Window
             </p>
 
-            <button className="mt-5 px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700">
+            <button className="mt-5 text-lg px-5 py-2 border rounded-lg border-blue-600 hover:border-blue-700  text-blue-600 hover:text-blue-700 cursor-pointer">
               Continue
             </button>
 
@@ -102,7 +87,7 @@ export default function Dashboard() {
         </div>
 
         {/* Last Practice */}
-        <div className="bg-zinc-900 rounded-xl p-5">
+        <div className="bg-mist-900 rounded-xl p-5 border border-mist-700">
 
           <div className="flex justify-between">
             <h2 className="text-xl font-semibold">
@@ -122,7 +107,7 @@ export default function Dashboard() {
               Solved Yesterday
             </p>
 
-            <button className="mt-5 px-5 py-2 rounded-lg bg-green-600 hover:bg-green-700">
+            <button className="mt-5 px-5 py-2 text-lg rounded-lg border border-green-600 hover:border-green-700 cursor-pointer text-green-600 hover:text-green-700">
               Practice Again
             </button>
 
@@ -131,27 +116,31 @@ export default function Dashboard() {
         </div>
 
         {/* Daily Goal */}
-        <div className="bg-zinc-900 rounded-xl p-5">
+        <div className="bg-mist-900 rounded-xl p-5 border border-mist-700">
 
           <h2 className="text-xl font-semibold">
             Today's Goal
           </h2>
 
-          <div className="mt-5">
+          <div className="mt-4">
 
-            <p className="text-4xl font-bold">
+            <p className="text-lg font-bold">
               2 / 5
             </p>
 
-            <div className="w-full h-3 bg-zinc-800 rounded-full mt-5">
+            <div className="w-full h-1 bg-zinc-800 rounded-full mt-1">
 
-              <div className="w-2/5 h-full bg-blue-500 rounded-full"></div>
+              <div className="w-2/5 h-full bg-amber-500 rounded-full"></div>
 
             </div>
 
-            <p className="text-gray-400 mt-3">
+            <p className="text-gray-400 text-sm mt-1">
               Solve 3 more problems today.
             </p>
+
+            <button className="mt-4 px-5 py-2 text-lg rounded-lg border border-amber-600 hover:border-amber-700 cursor-pointer text-amber-600 hover:text-amber-700">
+              See Progress
+            </button>
 
           </div>
 
@@ -159,56 +148,16 @@ export default function Dashboard() {
 
       </div>
 
-      {/* Roadmap */}
-      <div className="mt-10">
-
-        <div className="flex justify-between mb-5">
-
-          <h2 className="text-2xl font-bold">
-            DSA Roadmap
-          </h2>
-
-          <button className="flex items-center gap-2 text-blue-400">
-            View All
-            <ChevronRight size={18} />
-          </button>
-
-        </div>
-
-        <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-4">
-
-          {roadmap.map((item) => (
-
-            <div
-              key={item}
-              className="bg-zinc-900 hover:bg-zinc-800 rounded-xl p-5 cursor-pointer transition"
-            >
-              <BookOpen className="mb-4 text-blue-400" />
-
-              <h3 className="font-medium">
-                {item}
-              </h3>
-
-              <p className="text-gray-400 text-sm mt-2">
-                10 / 25 Solved
-              </p>
-
-            </div>
-
-          ))}
-
-        </div>
-
-      </div>
+      
 
       {/* Activity */}
-      <div className="mt-10 bg-zinc-900 rounded-xl p-6">
+      <div className="mt-10 bg-mist-900 rounded-xl p-6 border border-mist-700">
 
         <h2 className="text-2xl font-bold">
           Weekly Activity
         </h2>
 
-        <div className="mt-6 h-60 flex items-center justify-center border-2 border-dashed border-zinc-700 rounded-lg">
+        <div className="mt-6 h-60 flex items-center justify-center border-2 border-dashed border-mist-700 rounded-lg">
 
           Chart Goes Here
 
@@ -222,23 +171,23 @@ export default function Dashboard() {
 
 function Card({ icon, title, value, color }) {
   return (
-    <div className="bg-zinc-900 rounded-xl p-5">
+    <div className="bg-mist-900 rounded-xl p-3 px-4 border border-mist-700">
 
       <div className="flex justify-between items-center">
 
         <div>
 
-          <p className="text-gray-400">
+          <p className="text-gray-400 text-xl">
             {title}
           </p>
 
-          <h2 className={`text-3xl font-bold mt-2 ${color}`}>
+          <h2 className={`font-bold text-xl  text-amber-500`}>
             {value}
           </h2>
 
         </div>
 
-        <div className="bg-zinc-800 p-3 rounded-lg">
+        <div className=" p-3 rounded-lg">
           {icon}
         </div>
 

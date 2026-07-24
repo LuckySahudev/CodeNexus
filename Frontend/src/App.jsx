@@ -19,7 +19,7 @@ const App = () => {
   };
 
   return (
-    <div className=" bg-mist-900 h-screen w-full border-2 border-whi">
+    <div className=" flex flex-col bg-mist-900 h-screen w-full border-2 border-whi">
       <Header
         theme={theme}
         setTheme={setTheme}
