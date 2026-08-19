@@ -192,7 +192,7 @@ export default function Notes() {
       </div>
 
       {/* Floating Button */}
-      <button className="fixed bottom-8 right-8 flex items-center gap-3 rounded-full bg-amber-500 px-6 py-4 font-semibold text-black shadow-xl transition-all duration-300 hover:scale-105 hover:bg-amber-400">
+      <button className="absolute bottom-8 right-8 flex items-center gap-3 rounded-full bg-amber-500 px-6 py-4 font-semibold text-black cursor-pointer hover:scale-101 hover:bg-amber-500">
         <Plus size={22} />
         <span>Add Note</span>
       </button>
