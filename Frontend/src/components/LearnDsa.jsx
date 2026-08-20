@@ -5,48 +5,9 @@ import {
   ExternalLink,
   Database,
   BrainCircuit,
-  NotebookPen ,
+  NotebookPen,
 } from "lucide-react";
-
-const dataStructureTitles = [
-  "1D Array",
-  "2D Array",
-  "String",
-  "Linked List",
-  "Stack",
-  "Queue",
-  "HashSet",
-  "HashMap",
-  "Tree",
-  "Heap",
-  "Graph",
-];
-
-const algorithmTitles = [
-  "Linear Search",
-  "Binary Search",
-  "Two Pointer",
-  "Sliding Window",
-  "Prefix Sum",
-  "Basic Sorting",
-  "Cycle Sort",
-  "Quick Sort",
-  "Merge Sort",
-  "Slow Fast Pointer",
-  "Dummy Node",
-  "Monotonic Stack",
-  "Binary Tree",
-  "Binary Search Tree",
-  "DFS Tree",
-  "BFS Tree",
-  "Kth Element Problems",
-  "Bit Manipulation",
-  "Dynamic Programming 1 ( 1D DP )",
-  "DP 2 ( 2D DP )",
-  "DP 3 ( Subsequence )",
-  "DP 4 ( Knapsack )",
-  "Backtracking"
-];
+import { useEffect } from "react";
 
 const dataStructuresQuestions = [
   [
@@ -2454,8 +2415,43 @@ const algorithmsQuestions = [
   ],
 ];
 
-
 export default function LearnDsa() {
+  const [loading, setLoading] = useState(true);
+  const [dataStructureTitles, setDataStructureTitles] = useState([]);
+  const [algorithmTitles, setAlgorithmTitles] = useState([]);
+
+  const getDsTitles = async () => {
+    const responce = await fetch("http://localhost:8080/datastructure/");
+    const data = await responce.json();
+    return data;
+  };
+
+  const getAlgoTitles = async () => {
+    const responce = await fetch("http://localhost:8080/algorithm/");
+    const data = await responce.json();
+    return data;
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [dsTitles, algoTitles] = await Promise.all([
+          getDsTitles(),
+          getAlgoTitles(),
+        ]);
+
+        setDataStructureTitles(dsTitles);
+        setAlgorithmTitles(algoTitles);
+      } catch (error) {
+        console.error("Failed to fetch titles:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   const [mode, setMode] = useState("data");
   const [openSection, setOpenSection] = useState(-1);
 
@@ -2463,6 +2459,17 @@ export default function LearnDsa() {
     mode === "data" ? dataStructuresQuestions : algorithmsQuestions;
 
   const titles = mode === "data" ? dataStructureTitles : algorithmTitles;
+
+  if (loading) {
+    return (
+      <div className="h-full flex justify-center items-center px-6 py-8 bg-zinc-950 rounded-2xl border border-mist-700">
+        <div className="flex items-center justify-center py-20">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-600 border-t-amber-500"></div>
+          <span className="ml-4 text-gray-400">Loading...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-8 bg-zinc-950 rounded-2xl border border-mist-700 ">
@@ -2529,11 +2536,11 @@ export default function LearnDsa() {
               >
                 <div className="text-left">
                   <h2 className="text-xl font-semibold text-white">
-                    {titles[index]}
+                    {titles[index]?.name}
                   </h2>
 
                   <p className="mt-1 text-sm text-gray-400">
-                    {questions.length} Questions
+                    {titles[index]?.question_count}
                   </p>
                 </div>
 
