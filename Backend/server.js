@@ -17,9 +17,9 @@ server.use('/',(req,res)=>{
   res.json({"mess":"Trying for Bad Request."})
 })
 
+ 
 
-
-
+ 
 server.listen(8080,()=>{
   console.log("server is on");
 })
