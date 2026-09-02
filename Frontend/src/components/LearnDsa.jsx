@@ -163,8 +163,8 @@ export default function LearnDsa() {
                   </p>
                 </div>
 
-                <div>
-                  {innerLoading ? (
+                <div className="flex gap-5">
+                  {innerLoading && index === openSection ? (
                     <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-600 border-t-amber-500" />
                   ) : isOpen ? (
                     <ChevronDown size={22} className="text-gray-400" />
