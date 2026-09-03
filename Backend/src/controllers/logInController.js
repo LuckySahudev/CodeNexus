@@ -11,11 +11,15 @@ const privateKey = fs.readFileSync(
 
 exports.loginById = async (req, res) => {
   try {
-    const { id, password } = req.body;
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res.status(400).json({ mess: "Username and password are required" });
+    }
 
     const user = await pool.query(
       `SELECT * FROM users WHERE id = $1`,
-      [id]
+      [username]
     );
 
     if (user.rows.length === 0) {
@@ -43,7 +47,7 @@ exports.loginById = async (req, res) => {
       }
     );
 
-    return res.json({ token });
+    return res.json({ token, username: user.rows[0].id });
 
   } catch (error) {
     console.error(error);
@@ -57,6 +61,10 @@ exports.loginById = async (req, res) => {
 exports.loginByGmail = async (req, res) => {
   try {
     const { gmail, password } = req.body;
+
+    if (!gmail || !password) {
+      return res.status(400).json({ mess: "Email and password are required" });
+    }
 
     const user = await pool.query(
       `SELECT * FROM users WHERE gmail = $1`,
@@ -88,7 +96,7 @@ exports.loginByGmail = async (req, res) => {
       }
     );
 
-    return res.json({ token });
+    return res.status(200).json({ token, username: user.rows[0].id });
 
   } catch (error) {
     console.error(error);

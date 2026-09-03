@@ -10,7 +10,16 @@ const publicKey = fs.readFileSync(
 
 const auth = async (req, res, next) => {
   try {
-    const token = req.body.token;
+    
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+      return res.status(401).json({
+        mess: "Token missing"
+      });
+    }
+
+    const token = authHeader.split(" ")[1];
 
     const decoded = jwt.verify(
       token,

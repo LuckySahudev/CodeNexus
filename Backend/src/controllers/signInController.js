@@ -9,14 +9,18 @@ const privateKey = fs.readFileSync(
   "utf-8"
 );
 
-exports.signin = async (req, res) => {
+exports.signup = async (req, res) => {
   try {
-    const { gmail, id, password } = req.body;
+    const { username, email, password } = req.body;
+
+    if (!username || !email || !password) {
+      return res.status(400).json({ error: "Username, email, and password are required" });
+    }
 
     // Check gmail
     let user = await pool.query(
       `SELECT gmail FROM users WHERE gmail = $1`,
-      [gmail]
+      [email]
     );
 
     if (user.rows.length > 0) {
@@ -26,7 +30,7 @@ exports.signin = async (req, res) => {
     // Check ID
     user = await pool.query(
       `SELECT id FROM users WHERE id = $1`,
-      [id]
+      [username]
     );
 
     if (user.rows.length > 0) {
@@ -41,17 +45,17 @@ exports.signin = async (req, res) => {
       `INSERT INTO users (id, gmail, password)
        VALUES ($1, $2, $3)
        RETURNING *`,
-      [id, gmail, hash]
+      [username, email, hash]
     );
 
     // Create JWT
     const token = jwt.sign(
-      { gmail:gmail },
+      { gmail: email },
       privateKey,
       { algorithm: "RS256" }
     );
 
-    return res.json({ token });
+    return res.status(201).json({ token, username: user.rows[0].id });
 
   } catch (error) {
     console.error(error);

@@ -14,7 +14,7 @@ server.use(cors())
 server.use(express.json());
 server.use(Router);
 server.use('/',(req,res)=>{
-  res.json({"mess":"Trying for Bad Request."})
+  res.status(400).json({"mess":"Trying for Bad Request."})
 })
 
  

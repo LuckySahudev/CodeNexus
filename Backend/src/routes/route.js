@@ -1,9 +1,7 @@
 const express = require("express");
-const pool = require("../config/db")
 const questionController = require("../controllers/questionsController")
 const dataStructureController = require("../controllers/dataStructureController")
 const algorithmController = require("../controllers/algorithmController")
-const userController = require("../controllers/userController")
 const signInController = require("../controllers/signInController")
 const logInController = require("../controllers/logInController")
 const auth = require("../middleware/auth");
@@ -17,11 +15,11 @@ const Router = express.Router();
 
 Router
 
-  .get("/signin", signInController.signin)
+  .post("/signup", signInController.signup)
 
-  .get("/login/gmail", logInController.loginByGmail)
+  .post("/login/gmail", logInController.loginByGmail)
 
-  .get("/login/id", logInController.loginById)
+  .post("/login/id", logInController.loginById)
 
   .get("/question/:id", auth , questionController.getQuestion)
 
