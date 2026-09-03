@@ -8,6 +8,7 @@ import {
   NotebookPen,
 } from "lucide-react";
 import { useEffect } from "react";
+import axios from "axios";
 
 export default function LearnDsa() {
   const [loading, setLoading] = useState(true);
@@ -20,22 +21,38 @@ export default function LearnDsa() {
   const [questions, setQuestions] = useState([]);
 
   const getDsTitles = async () => {
-    const responce = await fetch("http://localhost:8080/datastructure/");
-    const data = await responce.json();
+    const responce = await axios.get(
+      "http://localhost:8080/datastructure/",
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      }
+    );
+    const data = await responce.data;
     return data;
   };
 
   const getAlgoTitles = async () => {
-    const responce = await fetch("http://localhost:8080/algorithm/");
-    const data = await responce.json();
+    const responce = await axios.get("http://localhost:8080/algorithm/", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }
+    });
+    const data = await responce.data;
     return data;
   };
 
   const getQuestions = async (idx, mode) => {
-    const response = await fetch(
+    const response = await axios.get(
       `http://localhost:8080/${
         mode === "data" ? "dsaquestions" : "algoquestions"
       }/${idx + 1}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      }
     );
 
     const data = await response.json();

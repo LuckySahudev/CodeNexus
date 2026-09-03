@@ -74,8 +74,14 @@ const LoginPopUp = ({ setIsLogin, setShowLogin, setUserName }) => {
         setShowLogin(false);
       }
     } catch (error) {
-      console.error("Sign up error:", error);
-      alert("Something went wrong. Please try again.");
+
+      if (error.response.status === 409) {
+        alert(error.response.data.mess);
+      }
+      else{
+        console.error("Sign up error:", error);
+        alert("Something went wrong. Please try again.");
+      }
     }
   };
 

@@ -11,20 +11,20 @@ const privateKey = fs.readFileSync(
 
 exports.signup = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, gmail, password } = req.body;
 
-    if (!username || !email || !password) {
-      return res.status(400).json({ error: "Username, email, and password are required" });
+    if (!username || !gmail || !password) {
+      return res.status(400).json({ error: "Username, gmail, and password are required" });
     }
 
     // Check gmail
     let user = await pool.query(
       `SELECT gmail FROM users WHERE gmail = $1`,
-      [email]
+      [gmail]
     );
 
     if (user.rows.length > 0) {
-      return res.json({ mess: "gmail already exists." });
+      return res.status(409).json({ mess: "gmail already exists." });
     }
 
     // Check ID
@@ -34,7 +34,7 @@ exports.signup = async (req, res) => {
     );
 
     if (user.rows.length > 0) {
-      return res.json({ mess: "UserId already exists." });
+      return res.status(409).json({ mess: "UserId already exists." });
     }
 
     // Hash password
@@ -45,12 +45,12 @@ exports.signup = async (req, res) => {
       `INSERT INTO users (id, gmail, password)
        VALUES ($1, $2, $3)
        RETURNING *`,
-      [username, email, hash]
+      [username, gmail, hash]
     );
 
     // Create JWT
     const token = jwt.sign(
-      { gmail: email },
+      { gmail: gmail },
       privateKey,
       { algorithm: "RS256" }
     );
