@@ -23,9 +23,11 @@ Router
 
   .get("/question/:id", auth , questionController.getQuestion)
 
-  .get("/algoquestions/:id", auth, questionController.getAlgoQuestion)
+  .post("/solvedquestions", auth, questionController.manageSolveQuestions)
 
-  .get("/dsaquestions/:id", auth,  questionController.getDsaQuestions)
+  .get("/algoquestions", auth, questionController.getAlgoQuestion)
+
+  .get("/dsaquestions", auth,  questionController.getDsaQuestions)
 
   .get("/algorithm/:id", auth, algorithmController.getAlgorithm)
 

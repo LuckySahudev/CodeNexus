@@ -96,7 +96,7 @@ exports.loginByGmail = async (req, res) => {
       }
     );
 
-    return res.status(200).json({ token, username: user.rows[0].id });
+    return res.status(200).json({ token, username: user.rows[0].id, user_num_id: user.rows[0].num_id });
 
   } catch (error) {
     console.error(error);

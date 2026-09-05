@@ -43,19 +43,21 @@ export default function LearnDsa() {
     return data;
   };
 
-  const getQuestions = async (idx, mode) => {
+  const getQuestions = async (topicId, mode) => {
     const response = await axios.get(
       `http://localhost:8080/${
         mode === "data" ? "dsaquestions" : "algoquestions"
-      }/${idx + 1}`,
+      }`,
       {
+        params: mode === "data" ? { ds_id: topicId } : { algo_id: topicId },
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
-        }
+        },
       }
     );
 
-    const data = await response.json();
+
+    const data = await response.data;
     return data;
   };
 
@@ -163,10 +165,15 @@ export default function LearnDsa() {
                   setOpenSection(index);
                   setInnerLoading(true);
 
-                  const data = await getQuestions(index, mode);
-
-                  setQuestions(data);
-                  setInnerLoading(false);
+                  try {
+                    const data = await getQuestions(title.id, mode);
+                    setQuestions(data);
+                  } catch (error) {
+                    console.error("Failed to fetch questions:", error);
+                    setQuestions([]);
+                  } finally {
+                    setInnerLoading(false);
+                  }
                 }}
                 className="flex w-full items-center justify-between px-6 py-5 transition hover:bg-mist-800"
               >
@@ -197,12 +204,41 @@ export default function LearnDsa() {
                 <div className="space-y-3 border-t border-mist-700 p-4">
                   {questions.map((item, index) => (
                     <div
-                      key={item.id}
+                      key={item.question_id ?? item.id}
                       className="flex items-center justify-between rounded-xl border border-mist-700 bg-mist-900 px-5 py-2 transition hover:border-mist-500 "
                     >
                       {/* Left */}
                       <div className="flex items-center gap-4">
                         <input
+                          checked={Boolean(item.solved)}
+                          onChange={async () => {
+                            const action = item.solved ? "delete" : "create";
+                            const questionId = item.question_id ?? item.id;
+                            const updatedQuestions = questions.map((question, questionIndex) =>
+                              questionIndex === index
+                                ? { ...question, solved: !question.solved }
+                                : question
+                            );
+                            setQuestions(updatedQuestions);
+
+                            try {
+                              await axios.post(
+                              "http://localhost:8080/solvedquestions/",
+                              {
+                                action,
+                                question_id: questionId,
+                              },
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                                },
+                              }
+                            );
+                            } catch (error) {
+                              console.error("Failed to update solved question:", error);
+                              setQuestions(questions);
+                            }
+                          }}
                           type="checkbox"
                           className="h-4 w-4 accent-amber-500 cursor-pointer"
                         />

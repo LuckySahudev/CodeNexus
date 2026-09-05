@@ -24,6 +24,8 @@ const LoginPopUp = ({ setIsLogin, setShowLogin, setUserName }) => {
 
       if (res.status === 200) {
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("username", res.data.username);
+        localStorage.setItem("user_num_id", res.data.user_num_id);
         setUserName(res.data.username);
         setIsLogin(true);
         setShowLogin(false);
@@ -69,6 +71,8 @@ const LoginPopUp = ({ setIsLogin, setShowLogin, setUserName }) => {
         alert("Sign up successful!");
 
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("username", res.data.username);
+        localStorage.setItem("user_num_id", res.data.user_num_id);
         setUserName(res.data.username);
         setIsLogin(true);
         setShowLogin(false);
