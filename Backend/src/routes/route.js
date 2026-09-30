@@ -4,6 +4,7 @@ const dataStructureController = require("../controllers/dataStructureController"
 const algorithmController = require("../controllers/algorithmController")
 const signInController = require("../controllers/signInController")
 const logInController = require("../controllers/logInController")
+const practiceController = require("../controllers/practiceController")
 const auth = require("../middleware/auth");
 
 
@@ -36,5 +37,11 @@ Router
   .get("/algorithm", auth, algorithmController.getAllAlgorithms)
   
   .get("/datastructure", auth, dataStructureController.getAllDataStructures)
+
+  .get("/practice/preferences", auth, practiceController.getUserPracticePreferences)
+
+  .put("/practice/preferences", auth, practiceController.saveUserPracticePreferences)
+
+  .post("/practice/preferences", auth, practiceController.savePreferences)
 
 module.exports = Router;
