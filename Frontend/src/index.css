@@ -10,3 +10,21 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.auth-input:-webkit-autofill,
+.auth-input:-webkit-autofill:hover,
+.auth-input:-webkit-autofill:focus,
+.auth-input:autofill {
+  -webkit-text-fill-color: #f3f4f6;
+  -webkit-box-shadow: 0 0 0 1000px #171c1c inset;
+  box-shadow: 0 0 0 1000px #171c1c inset;
+  caret-color: #f3f4f6;
+  transition: background-color 9999s ease-out 0s;
+}
+
+.auth-backdrop {
+  background-color: rgb(4 4 4 / 65%);
+  background-image:
+    radial-gradient(ellipse at 17% 48%, rgb(247 29 8 / 12%), transparent 34%),
+    radial-gradient(ellipse at 84% 55%, rgb(92 21 11 / 18%), transparent 32%);
+}

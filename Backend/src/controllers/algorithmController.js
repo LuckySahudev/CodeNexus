@@ -15,7 +15,9 @@ exports.getAllAlgorithms = async (req, res) => {
     `
     SELECT 
           al.*,
-          lal.question_count
+          lal.question_count,
+          ad.description AS topic_description,
+          ad.things_to_remember
       FROM algorithms AS al
       JOIN (
           SELECT 
@@ -24,7 +26,8 @@ exports.getAllAlgorithms = async (req, res) => {
           FROM learn_algorithm_questions
           GROUP BY algorithm_id
       ) AS lal
-      ON lal.al_id = al.id;
+      ON lal.al_id = al.id
+      LEFT JOIN algo_description AS ad ON ad.algo_id = al.id;
     `
   )
   res.json(que.rows);

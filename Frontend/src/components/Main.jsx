@@ -8,7 +8,7 @@ import Progress from "./Progress";
 import Community from "./Community";
 import Dev from "./Dev";
 import Bookmark from "./Bookmark"
-import Notes from "./Notes";
+import Notes, { NotesSection } from "./Notes";
 
 
 const Main = (props) => {
@@ -23,7 +23,12 @@ const Main = (props) => {
           <Route path='progress' element={<Progress/>} ></Route>
           <Route path="community" element={<Community/>}></Route>
           <Route path='bookmarks' element={<Bookmark/>} ></Route>
-          <Route path='notes' element={<Notes/>} ></Route>
+          <Route path='notes' element={<Notes />}>
+            <Route index element={<Navigate to="general" replace />} />
+            <Route path="general" element={<NotesSection section="general" />} />
+            <Route path="questions" element={<NotesSection section="questions" />} />
+            <Route path="interview" element={<NotesSection section="interview" />} />
+          </Route>
 
         </Route>
       </Routes>
