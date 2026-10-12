@@ -31,6 +31,8 @@ export default function LearnDsa() {
   const [bookmarksReady, setBookmarksReady] = useState(false);
   const [bookmarkLoading, setBookmarkLoading] = useState({});
   const [bookmarkError, setBookmarkError] = useState("");
+  const [solvedLoading, setSolvedLoading] = useState({});
+  const [solvedError, setSolvedError] = useState("");
   const topicHeaderRefs = useRef([]);
   const fetchSequenceRef = useRef(0);
 
@@ -104,6 +106,59 @@ export default function LearnDsa() {
       setBookmarkError("Could not update bookmark. Please try again.");
     } finally {
       setBookmarkLoading((current) => ({ ...current, [questionId]: false }));
+    }
+  };
+
+  const toggleSolved = async (item) => {
+    const questionId = Number(item.question_id ?? item.id);
+    if (!Number.isInteger(questionId) || questionId <= 0 || solvedLoading[questionId]) return;
+
+    const nextSolved = !item.learn_solved;
+    setSolvedError("");
+    setSolvedLoading((current) => ({ ...current, [questionId]: true }));
+    setQuestions((current) => current.map((question) =>
+      Number(question.question_id ?? question.id) === questionId
+        ? {
+            ...question,
+            learn_solved: nextSolved,
+            solved: nextSolved ? true : question.solved,
+          }
+        : question
+    ));
+
+    try {
+      const { data } = await axios.post(
+        "http://localhost:8080/solvedquestions",
+        {
+          action: nextSolved ? "create" : "delete",
+          question_id: questionId,
+          mode: mode === "data" ? "data" : "algorithm",
+        },
+        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } },
+      );
+      setQuestions((current) => current.map((question) =>
+        Number(question.question_id ?? question.id) === questionId
+          ? {
+              ...question,
+              learn_solved: data.learn_solved,
+              solved: nextSolved ? true : question.solved,
+            }
+          : question
+      ));
+    } catch (error) {
+      console.error("Failed to update solved question:", error);
+      setQuestions((current) => current.map((question) =>
+        Number(question.question_id ?? question.id) === questionId
+          ? {
+              ...question,
+              learn_solved: Boolean(item.learn_solved),
+              solved: Boolean(item.solved),
+            }
+          : question
+      ));
+      setSolvedError(error.response?.data?.message || "Could not update solved status. Please try again.");
+    } finally {
+      setSolvedLoading((current) => ({ ...current, [questionId]: false }));
     }
   };
 
@@ -496,7 +551,14 @@ export default function LearnDsa() {
                       {bookmarkError}
                     </p>
                   )}
+                  {solvedError && (
+                    <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-400" role="alert">
+                      {solvedError}
+                    </p>
+                  )}
                   {questions.map((item, index) => {
+                    const questionId = Number(item.question_id ?? item.id);
+                    const isSavingSolved = Boolean(solvedLoading[questionId]);
                     const leetcodeId = item.leetcode_id ?? item.leetcodeId ?? item.leetcodeid;
                     const platform = item.platform ?? "LeetCode";
 
@@ -508,37 +570,11 @@ export default function LearnDsa() {
                       {/* Left */}
                       <div className="flex min-w-0 items-start gap-3 sm:items-center">
                         <input
-                          checked={Boolean(item.solved)}
-                          onChange={async () => {
-                            const action = item.solved ? "delete" : "create";
-                            const questionId = item.question_id ?? item.id;
-                            const updatedQuestions = questions.map((question, questionIndex) =>
-                              questionIndex === index
-                                ? { ...question, solved: !question.solved }
-                                : question
-                            );
-                            setQuestions(updatedQuestions);
-
-                            try {
-                              await axios.post(
-                              "http://localhost:8080/solvedquestions/",
-                              {
-                                action,
-                                question_id: questionId,
-                              },
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${localStorage.getItem("token")}`,
-                                },
-                              }
-                            );
-                            } catch (error) {
-                              console.error("Failed to update solved question:", error);
-                              setQuestions(questions);
-                            }
-                          }}
+                          checked={Boolean(item.learn_solved)}
+                          onChange={() => toggleSolved(item)}
+                          disabled={isSavingSolved}
                           type="checkbox"
-                          className="h-4 w-4 accent-amber-500 cursor-pointer"
+                          className="h-4 w-4 cursor-pointer accent-amber-500 disabled:cursor-wait disabled:opacity-50"
                         />
 
                         <span className="w-6 shrink-0 text-sm font-semibold text-gray-500">

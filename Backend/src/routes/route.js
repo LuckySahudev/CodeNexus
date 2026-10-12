@@ -12,6 +12,8 @@ router.use(require("./practiceRouter"));
 
 router.use(require("./progressRouter"));
 
+router.use(require("./dashboardRouter"));
+
 router.use(require("./bookmarkRouter"));
 
 router.use(require("./notesRouter"));
