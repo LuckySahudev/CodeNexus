@@ -11,7 +11,7 @@ Code Nexus is a modern DSA learning platform designed to help students prepare f
 * 📚 Pattern-based DSA roadmap
 * 🎯 Curated LeetCode problems
 * 📈 Progress tracking
-* 🔍 Search and filter problems
+* 🔍 Practice Mode provides Questions
 * 📱 Responsive UI
 * ⚡ Fast and modern interface
 * 🔗 Direct links to LeetCode questions
