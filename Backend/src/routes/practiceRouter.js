@@ -6,8 +6,10 @@ const router = express.Router();
 
 router.get("/practice/preferences", auth, practiceController.getUserPracticePreferences);
 
-router.put("/practice/preferences", auth, practiceController.saveUserPracticePreferences);
+router.get("/practice/today", auth, practiceController.getDailyPractice);
+router.get("/practice/history", auth, practiceController.getPracticeHistory);
+router.patch("/practice/questions/:questionId/solved", auth, practiceController.markPracticeQuestionSolved);
 
-router.post("/practice/preferences", auth, practiceController.savePreferences);
+router.put("/practice/preferences", auth, practiceController.saveUserPracticePreferences);
 
 module.exports = router;

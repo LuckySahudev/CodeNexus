@@ -11,6 +11,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import PageLoading from "./PageLoading";
 
 const noteSections = [
   { to: "general", label: "General Notes", Icon: NotebookPen },
@@ -266,7 +267,7 @@ export function NotesSection({ section }) {
   const sectionNotes = notes.filter((note) => getSectionForType(note.type_name) === section);
 
   if (isLoading) {
-    return <div className="flex flex-1 items-center justify-center text-sm text-gray-400">Loading notes...</div>;
+    return <PageLoading />;
   }
 
   if (error && notes.length === 0) {

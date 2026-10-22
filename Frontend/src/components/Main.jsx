@@ -13,7 +13,7 @@ import Notes, { NotesSection } from "./Notes";
 
 const Main = (props) => {
   return (
-    <main className="h-[90%]  bg-mist-900  text-white ">
+    <main className="min-h-0 flex-1 bg-mist-900 text-white">
       <Routes>
         <Route path="/" element={<Home {...props} /> }></Route>
         <Route path="/dev" element={<Dev {...props} />}>

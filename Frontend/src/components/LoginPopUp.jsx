@@ -43,6 +43,9 @@ const LoginPopUp = ({ setIsLogin, setShowLogin, setUserName }) => {
       if (error.response?.status === 404) {
         alert("No User Available");
       }
+      if (!error.response || ![401, 404].includes(error.response.status)) {
+        alert(error.response?.data?.mess || "Could not sign in. Please try again.");
+      }
     } finally {
       setIsSubmitting(false);
     }

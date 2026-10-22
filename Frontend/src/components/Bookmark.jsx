@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ExternalLink, Trash2, Bookmark as BookmarkIcon } from "lucide-react";
 import AddNoteButton from "./AddNoteButton";
+import PageLoading from "./PageLoading";
 
 const getQuestionId = (item) => item.question_id ?? item.id;
 
@@ -63,14 +64,7 @@ export default function Bookmarks() {
   };
 
   if (loading) {
-    return (
-      <div className="h-full flex items-center justify-center px-6 py-8 rounded-2xl border border-mist-700 bg-zinc-950">
-        <div className="flex items-center justify-center py-20" role="status">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-600 border-t-amber-500" />
-          <span className="ml-4 text-gray-400">Loading...</span>
-        </div>
-      </div>
-    );
+    return <PageLoading />;
   }
 
   return (

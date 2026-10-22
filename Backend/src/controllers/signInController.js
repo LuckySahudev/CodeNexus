@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
 const path = require("path");
+const { initializeDailyPractice } = require("./practiceController");
 
 const privateKey = fs.readFileSync(
   path.resolve(__dirname, "../keys/private.key"),
@@ -11,15 +12,17 @@ const privateKey = fs.readFileSync(
 
 exports.signup = async (req, res) => {
   try {
-    const { username, gmail, password } = req.body;
+    const username = typeof req.body.username === "string" ? req.body.username.trim() : "";
+    const gmail = typeof req.body.gmail === "string" ? req.body.gmail.trim().toLowerCase() : "";
+    const { password } = req.body;
 
-    if (!username || !gmail || !password) {
+    if (!username || !gmail || typeof password !== "string" || password.length === 0) {
       return res.status(400).json({ error: "Username, gmail, and password are required" });
     }
 
     // Check gmail
     let user = await pool.query(
-      `SELECT gmail FROM users WHERE gmail = $1`,
+      `SELECT gmail FROM users WHERE LOWER(TRIM(gmail)) = $1`,
       [gmail]
     );
 
@@ -29,7 +32,7 @@ exports.signup = async (req, res) => {
 
     // Check ID
     user = await pool.query(
-      `SELECT id FROM users WHERE id = $1`,
+      `SELECT id FROM users WHERE LOWER(TRIM(id)) = LOWER($1)`,
       [username]
     );
 
@@ -48,6 +51,8 @@ exports.signup = async (req, res) => {
       [username, gmail, hash]
     );
 
+    const practice = await initializeDailyPractice(user.rows[0].num_id);
+
     // Create JWT
     const token = jwt.sign(
       { gmail: gmail },
@@ -55,10 +60,18 @@ exports.signup = async (req, res) => {
       { algorithm: "RS256" }
     );
 
-    return res.status(201).json({ token, username: user.rows[0].id });
+    return res.status(201).json({
+      token,
+      username: user.rows[0].id,
+      user_num_id: user.rows[0].num_id,
+      practice,
+    });
 
   } catch (error) {
     console.error(error);
+    if (error.code === "23505") {
+      return res.status(409).json({ mess: "Username or email already exists." });
+    }
     return res.status(500).json({ error: "Server error" });
   }
 };

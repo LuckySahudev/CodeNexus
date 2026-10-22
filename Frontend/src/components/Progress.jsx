@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Activity, BrainCircuit, CheckCircle2, Database } from "lucide-react";
+import PageLoading from "./PageLoading";
 
 const emptyProgress = {
   summary: {
@@ -48,14 +49,7 @@ export default function Progress() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex min-h-full w-full items-center justify-center rounded-2xl border border-mist-700 bg-mist-950 px-6 py-8">
-        <div className="flex items-center justify-center py-20" role="status">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-600 border-t-amber-500" />
-          <span className="ml-4 text-gray-400">Loading progress...</span>
-        </div>
-      </div>
-    );
+    return <PageLoading />;
   }
 
   if (error) {

@@ -10,6 +10,7 @@ import {
 import { useEffect } from "react";
 import axios from "axios";
 import AddNoteButton from "./AddNoteButton";
+import PageLoading from "./PageLoading";
 
 export default function LearnDsa() {
   const [loading, setLoading] = useState(true);
@@ -264,14 +265,7 @@ export default function LearnDsa() {
 
   // Loading in front
   if (loading) {
-    return (
-      <div className="min-h-full w-full flex justify-center items-center px-6 py-8 bg-zinc-950 rounded-2xl border border-mist-700">
-        <div className="flex items-center justify-center py-20">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-600 border-t-amber-500"></div>
-          <span className="ml-4 text-gray-400">Loading...</span>
-        </div>
-      </div>
-    );
+    return <PageLoading />;
   }
 
   return (

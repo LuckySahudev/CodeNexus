@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
 const path = require("path");
+const { initializeDailyPractice } = require("./practiceController");
 
 const privateKey = fs.readFileSync(
   path.resolve(__dirname, "../keys/private.key"),
@@ -11,14 +12,15 @@ const privateKey = fs.readFileSync(
 
 exports.loginById = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const username = typeof req.body.username === "string" ? req.body.username.trim() : "";
+    const { password } = req.body;
 
-    if (!username || !password) {
+    if (!username || typeof password !== "string" || password.length === 0) {
       return res.status(400).json({ mess: "Username and password are required" });
     }
 
     const user = await pool.query(
-      `SELECT * FROM users WHERE id = $1`,
+      `SELECT * FROM users WHERE LOWER(TRIM(id)) = LOWER($1)`,
       [username]
     );
 
@@ -39,6 +41,8 @@ exports.loginById = async (req, res) => {
       });
     }
 
+    const practice = await initializeDailyPractice(user.rows[0].num_id);
+
     const token = jwt.sign(
       { gmail: user.rows[0].gmail },
       privateKey,
@@ -47,7 +51,7 @@ exports.loginById = async (req, res) => {
       }
     );
 
-    return res.json({ token, username: user.rows[0].id });
+    return res.json({ token, username: user.rows[0].id, user_num_id: user.rows[0].num_id, practice });
 
   } catch (error) {
     console.error(error);
@@ -60,14 +64,15 @@ exports.loginById = async (req, res) => {
 
 exports.loginByGmail = async (req, res) => {
   try {
-    const { gmail, password } = req.body;
+    const gmail = typeof req.body.gmail === "string" ? req.body.gmail.trim() : "";
+    const { password } = req.body;
 
-    if (!gmail || !password) {
+    if (!gmail || typeof password !== "string" || password.length === 0) {
       return res.status(400).json({ mess: "Email and password are required" });
     }
 
     const user = await pool.query(
-      `SELECT * FROM users WHERE gmail = $1`,
+      `SELECT * FROM users WHERE LOWER(TRIM(gmail)) = LOWER($1)`,
       [gmail]
     );
 
@@ -88,6 +93,8 @@ exports.loginByGmail = async (req, res) => {
       });
     }
 
+    const practice = await initializeDailyPractice(user.rows[0].num_id);
+
     const token = jwt.sign(
       { gmail: user.rows[0].gmail },
       privateKey,
@@ -96,7 +103,7 @@ exports.loginByGmail = async (req, res) => {
       }
     );
 
-    return res.status(200).json({ token, username: user.rows[0].id, user_num_id: user.rows[0].num_id });
+    return res.status(200).json({ token, username: user.rows[0].id, user_num_id: user.rows[0].num_id, practice });
 
   } catch (error) {
     console.error(error);
