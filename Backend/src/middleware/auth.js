@@ -1,12 +1,6 @@
 const jwt = require("jsonwebtoken");
-const fs = require("fs");
-const path = require("path");
 const pool = require("../config/db");
-
-const publicKey = fs.readFileSync(
-  path.resolve(__dirname, "../keys/public.key"),
-  "utf-8"
-);
+const { publicKey } = require("../config/jwtKeys");
 
 const auth = async (req, res, next) => {
   const authHeader = req.headers.authorization;

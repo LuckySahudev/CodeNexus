@@ -1,14 +1,8 @@
 const pool = require("../config/db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const fs = require("fs");
-const path = require("path");
 const { initializeDailyPractice } = require("./practiceController");
-
-const privateKey = fs.readFileSync(
-  path.resolve(__dirname, "../keys/private.key"),
-  "utf-8"
-);
+const { privateKey } = require("../config/jwtKeys");
 
 exports.loginById = async (req, res) => {
   try {
