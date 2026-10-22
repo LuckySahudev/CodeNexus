@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db");
-const { publicKey } = require("../config/jwtKeys");
+const publicKey = process.env.PUBLIC_KEY?.replace(/\\n/g, "\n");
 
 const auth = async (req, res, next) => {
   const authHeader = req.headers.authorization;

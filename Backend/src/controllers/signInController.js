@@ -2,7 +2,7 @@ const pool = require("../config/db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { initializeDailyPractice } = require("./practiceController");
-const { privateKey } = require("../config/jwtKeys");
+const privateKey = process.env.PRIVATE_KEY?.replace(/\\n/g, "\n");
 
 exports.signup = async (req, res) => {
   try {
