@@ -1,6 +1,6 @@
 import React from "react";
 import PracticeInfo from "./PracticeInfo";
-import LearnDsaInfo from "./LearndsaInfo";
+import LearnDsaInfo from "./LearnDsaInfo";
 import { useState } from "react";
 
 
