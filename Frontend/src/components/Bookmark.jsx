@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { ExternalLink, Trash2, Bookmark as BookmarkIcon } from "lucide-react";
 import AddNoteButton from "./AddNoteButton";
 import PageLoading from "./PageLoading";
@@ -22,7 +22,7 @@ export default function Bookmarks() {
     setError("");
 
     try {
-      const response = await axios.get("http://localhost:8080/bookmarks", {
+      const response = await api.get("/bookmarks", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -47,7 +47,7 @@ export default function Bookmarks() {
     setError("");
 
     try {
-      await axios.delete(`http://localhost:8080/bookmarks/${questionId}`, {
+      await api.delete(`/bookmarks/${questionId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

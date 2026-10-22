@@ -8,7 +8,7 @@ import {
   Bookmark,
 } from "lucide-react";
 import { useEffect } from "react";
-import axios from "axios";
+import api from "../api";
 import AddNoteButton from "./AddNoteButton";
 import PageLoading from "./PageLoading";
 
@@ -61,7 +61,7 @@ export default function LearnDsa() {
   }, [openSection, innerLoading]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/bookmarks", {
+    api.get("/bookmarks", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -81,13 +81,13 @@ export default function LearnDsa() {
 
     try {
       if (isBookmarked) {
-        await axios.delete(`http://localhost:8080/bookmarks/${questionId}`, {
+        await api.delete(`/bookmarks/${questionId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
       } else {
-        await axios.post("http://localhost:8080/bookmarks", {
+        await api.post("/bookmarks", {
           question_id: questionId,
         }, {
           headers: {
@@ -128,8 +128,8 @@ export default function LearnDsa() {
     ));
 
     try {
-      const { data } = await axios.post(
-        "http://localhost:8080/solvedquestions",
+      const { data } = await api.post(
+        "/solvedquestions",
         {
           action: nextSolved ? "create" : "delete",
           question_id: questionId,
@@ -164,8 +164,8 @@ export default function LearnDsa() {
   };
 
   const getDsTitles = async () => {
-    const responce = await axios.get(
-      "http://localhost:8080/datastructure/",
+    const responce = await api.get(
+      "/datastructure/",
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -177,7 +177,7 @@ export default function LearnDsa() {
   };
 
   const getAlgoTitles = async () => {
-    const responce = await axios.get("http://localhost:8080/algorithm/", {
+    const responce = await api.get("/algorithm/", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       }
@@ -187,8 +187,8 @@ export default function LearnDsa() {
   };
 
   const getQuestions = async (topicId, mode) => {
-    const response = await axios.get(
-      `http://localhost:8080/${
+    const response = await api.get(
+      `/${
         mode === "data" ? "datastructure" : "algorithm"
       }/questions`,
       {
@@ -206,8 +206,8 @@ export default function LearnDsa() {
 
   const getTopicDescription = async (topicId, mode) => {
     const type = mode === "data" ? "datastructure" : "algorithm";
-    const { data } = await axios.get(
-      `http://localhost:8080/${type}/description/${topicId}`,
+    const { data } = await api.get(
+      `/${type}/description/${topicId}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -219,8 +219,8 @@ export default function LearnDsa() {
 
   const getTopicExamples = async (topicId, mode) => {
     const type = mode === "data" ? "datastructure" : "algorithm";
-    const { data } = await axios.get(
-      `http://localhost:8080/${type}/examples/${topicId}`,
+    const { data } = await api.get(
+      `/${type}/examples/${topicId}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -232,8 +232,8 @@ export default function LearnDsa() {
 
   const getTopicInterviewQuestions = async (topicId, mode) => {
     const type = mode === "data" ? "datastructure" : "algorithm";
-    const { data } = await axios.get(
-      `http://localhost:8080/${type}/interview-question/${topicId}`,
+    const { data } = await api.get(
+      `/${type}/interview-question/${topicId}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

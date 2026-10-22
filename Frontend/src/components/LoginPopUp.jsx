@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, LoaderCircle, X } from "lucide-react";
-import axios from "axios";
+import api from "../api";
 
 const LoginPopUp = ({ setIsLogin, setShowLogin, setUserName }) => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -22,7 +22,7 @@ const LoginPopUp = ({ setIsLogin, setShowLogin, setUserName }) => {
       const data = Object.fromEntries(formData);
 
       setIsSubmitting(true);
-      const res = await axios.post("http://localhost:8080/login/gmail", data);
+      const res = await api.post("/login/gmail", data);
 
       console.log("Login response:", res.status, res.data);
 
@@ -75,7 +75,7 @@ const LoginPopUp = ({ setIsLogin, setShowLogin, setUserName }) => {
       const data = Object.fromEntries(formData);
 
       setIsSubmitting(true);
-      const res = await axios.post("http://localhost:8080/signup", data);
+      const res = await api.post("/signup", data);
 
       if (res.status === 201) {
         alert("Sign up successful!");

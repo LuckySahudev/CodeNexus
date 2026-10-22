@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { Link } from "react-router-dom";
 import { BookOpen, Code2, Trophy, Flame, PlayCircle, Target } from "lucide-react";
 import PageLoading from "./PageLoading";
@@ -24,7 +24,7 @@ export default function Dashboard({ userName }) {
     try {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Please log in to view your dashboard.");
-      const { data } = await axios.get("http://localhost:8080/dashboard", {
+      const { data } = await api.get("/dashboard", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDashboard({ ...emptyDashboard, ...data });

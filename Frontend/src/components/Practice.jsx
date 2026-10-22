@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { CalendarDays } from "lucide-react";
 import AddNoteButton from "./AddNoteButton";
 import PageLoading from "./PageLoading";
 
-const API = "http://localhost:8080";
 const requestConfig = () => ({
   headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 });
@@ -53,16 +52,16 @@ export default function Practice() {
   const loadDailyPractice = useCallback(async () => {
     setError("");
     try {
-      const response = await axios.get(`${API}/practice/today`, requestConfig());
+      const response = await api.get("/practice/today", requestConfig());
       setDaily(response.data);
       try {
-        const historyResponse = await axios.get(`${API}/practice/history`, requestConfig());
+        const historyResponse = await api.get("/practice/history", requestConfig());
         setHistory(historyResponse.data.questions || []);
       } catch (historyRequestError) {
         console.error("Error loading practice history:", historyRequestError);
       }
       try {
-        const preferencesResponse = await axios.get(`${API}/practice/preferences`, requestConfig());
+        const preferencesResponse = await api.get("/practice/preferences", requestConfig());
         setSelectedDifficulties(
           (preferencesResponse.data.difficulties || [])
             .filter((item) => item.selected)
@@ -84,8 +83,8 @@ export default function Practice() {
     setError("");
     setSolvingQuestionIds((current) => new Set(current).add(solvingKey));
     try {
-      const response = await axios.patch(
-        `${API}/practice/questions/${questionId}/solved`,
+      const response = await api.patch(
+        `/practice/questions/${questionId}/solved`,
         { practice_date: practiceDate },
         requestConfig()
       );
@@ -126,7 +125,7 @@ export default function Practice() {
     setLoadingPreferences(true);
     setPreferencesError("");
     try {
-      const response = await axios.get(`${API}/practice/preferences`, requestConfig());
+      const response = await api.get("/practice/preferences", requestConfig());
       setPreferences(response.data);
       setSelectedDifficulties(
         (response.data.difficulties || []).filter((item) => item.selected).map((item) => item.name)
@@ -153,7 +152,7 @@ export default function Practice() {
     setSavingPreferences(true);
     setPreferencesError("");
     try {
-      const response = await axios.put(`${API}/practice/preferences`, {
+      const response = await api.put("/practice/preferences", {
         difficulties: preferences.difficulties.filter((item) => item.selected).map((item) => item.name),
         data_structures: preferences.data_structures.filter((item) => item.selected).map((item) => item.name),
         algorithms: preferences.algorithms.filter((item) => item.selected).map((item) => item.name),

@@ -1,8 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { Check, LoaderCircle, NotebookPen, X } from "lucide-react";
-
-const API_URL = "http://localhost:8080";
 
 export default function AddNoteButton({
   category,
@@ -38,7 +36,7 @@ export default function AddNoteButton({
     }
 
     try {
-      const { data } = await axios.get(`${API_URL}/notes/types`, {
+      const { data } = await api.get("/notes/types", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const matchingType = data.find((type) =>
@@ -68,8 +66,8 @@ export default function AddNoteButton({
     setError("");
     try {
       const token = localStorage.getItem("token");
-      await axios.post(
-        `${API_URL}/notes`,
+      await api.post(
+        "/notes",
         {
           type_id: noteType.type_id,
           title: noteTitle.trim(),

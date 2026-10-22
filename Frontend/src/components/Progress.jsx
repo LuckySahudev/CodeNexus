@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { Activity, BrainCircuit, CheckCircle2, Database } from "lucide-react";
 import PageLoading from "./PageLoading";
 
@@ -26,7 +26,7 @@ export default function Progress() {
     setError("");
 
     try {
-      const response = await axios.get("http://localhost:8080/progress", {
+      const response = await api.get("/progress", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

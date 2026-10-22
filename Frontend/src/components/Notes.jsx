@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { NavLink, Outlet, useLocation, useOutletContext } from "react-router-dom";
 import {
   NotebookPen,
@@ -66,8 +66,8 @@ export default function Notes() {
     try {
       const headers = { Authorization: `Bearer ${token}` };
       const [notesResponse, typesResponse] = await Promise.all([
-        axios.get("http://localhost:8080/notes", { headers }),
-        axios.get("http://localhost:8080/notes/types", { headers }),
+        api.get("/notes", { headers }),
+        api.get("/notes/types", { headers }),
       ]);
       setNotes(notesResponse.data);
       setNoteTypes(typesResponse.data);
@@ -136,13 +136,13 @@ export default function Notes() {
       };
 
       if (editingNote) {
-        await axios.put(
-          `http://localhost:8080/notes/${editingNote.note_id}`,
+        await api.put(
+          `/notes/${editingNote.note_id}`,
           payload,
           config
         );
       } else {
-        await axios.post("http://localhost:8080/notes", payload, config);
+        await api.post("/notes", payload, config);
       }
 
       setEditorOpen(false);
@@ -163,7 +163,7 @@ export default function Notes() {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:8080/notes/${note.note_id}?type_id=${note.type_id}`, {
+      await api.delete(`/notes/${note.note_id}?type_id=${note.type_id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setNotes((current) => current.filter((item) => item.note_id !== note.note_id));

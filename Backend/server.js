@@ -20,6 +20,7 @@ server.use('/',(req,res)=>{
  
 
  
-server.listen(8080,()=>{
-  console.log("server is on");
+const port = Number(process.env.PORT) || 8080;
+server.listen(port,()=>{
+  console.log(`server is on port ${port}`);
 })
