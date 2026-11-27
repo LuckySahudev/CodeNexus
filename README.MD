@@ -151,15 +151,15 @@ Current DSA patterns include:
 * ✅ 1D Arrays
 * ✅ 2D Arrays
 * ✅ Strings
-* ⏳ Linked Lists
-* ⏳ Stacks
-* ⏳ Queues
-* ⏳ Trees
-* ⏳ Graphs
-* ⏳ Dynamic Programming
-* ⏳ Greedy
-* ⏳ Backtracking
-* ⏳ Bit Manipulation
+* ✅ Linked Lists
+* ✅ Stacks
+* ✅ Queues
+* ✅ Trees
+* ✅ Graphs
+* ✅ Dynamic Programming
+* ✅ Greedy
+* ✅ Backtracking
+* ✅ Bit Manipulation
 
 More patterns will be added regularly.
 
